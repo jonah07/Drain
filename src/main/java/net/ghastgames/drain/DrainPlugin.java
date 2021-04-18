@@ -31,7 +31,9 @@ public class DrainPlugin extends JavaPlugin {
 
             new DynamicCommandBuilder("draintest", this)
                     .setPlayerOnly(true)
-                    .setExecutor(data -> ((Player) data.getSender()).setHealth(0))
+                    .setPermission("command.heal")
+                    .setPermissionErrorMessage("§cYou are not allowed to do this!")
+                    .setExecutor(data -> ((Player) data.getSender()).setHealth(20))
                     .build();
         }
 

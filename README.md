@@ -1,0 +1,40 @@
+![Drain - The Minecraft Plugin Library](https://i.imgur.com/x8Ks6aN.png)
+
+## What is Drain?
+Drain is a library for **Spigot and Bukkit** plugins that helps you to develop your plugins faster and easier.
+It includes many functionalities to make your development life easier.
+
+## Example: A /heal command
+
+Without Drain:
+
+```java
+public class HealCommand implements CommandExecutor {
+
+    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+        if (commandSender instanceof Player) {
+            Player player = (Player) sender;
+            if(player.hasPermission("command.heal")) {
+                player.setHealth(20);
+            } else {
+                player.sendMessage("§cYou are not allowed to do this!");
+            }
+        } else {
+            commandSender.sendMessage("§cThis command is player-only!");
+        }
+    }
+}
+```
+
+With Drain:
+
+```java
+new DynamicCommandBuilder("heal", this)
+        .setPlayerOnly(true)
+        .setPermission("command.heal")
+        .setPermissionErrorMessage("§cYou are not allowed to do this!")
+        .setExecutor(data -> ((Player) data.getSender()).setHealth(20))
+        .build();
+```
+
+
