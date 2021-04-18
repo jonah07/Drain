@@ -1,16 +1,5 @@
 package net.ghastgames.drain;
 
-/*
-TODO:
-    - Add @Cancel annotation for methods to cancel an event automatically
-
-        @Cancel
-        @EventHandler
-        public void onEvent(BlocKPlaceEvent event) {}
-
-        Idea: Get all methods annotated with the annotation, add an EventHandler
- */
-
 import net.ghastgames.drain.command.BukkitCommandRegistry;
 import net.ghastgames.drain.event.BukkitEventRegistry;
 import org.bukkit.command.CommandExecutor;
