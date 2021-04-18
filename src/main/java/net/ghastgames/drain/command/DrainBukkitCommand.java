@@ -8,12 +8,10 @@ import org.bukkit.command.CommandSender;
 public class DrainBukkitCommand implements CommandExecutor {
 
     @PluginCommand(
-        response = "§aThis server is using §eDrain §aby EinGriefer\n§7§ogithub.com/GhastGames/Drain"
+            response = "§aThis server is using §eDrain §aby EinGriefer\n§7§ogithub.com/GhastGames/Drain"
     )
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         return false;
     }
-
-
 }
