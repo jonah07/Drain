@@ -1,7 +1,9 @@
 package net.ghastgames.drain.command;
 
 import net.ghastgames.drain.annotations.PluginCommand;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Method;
@@ -42,8 +44,9 @@ public class BukkitCommandRegistry {
     /**
      * <strong>It's not recommended to use this method! Use the DynamicCommandBuilder instead.</strong>
      */
-    public static void registerCommand(DrainCommand drainCommand) {
+    public static void registerCommand(DrainCommand drainCommand, JavaPlugin plugin) {
         commands.add(drainCommand);
+        plugin.getCommand(drainCommand.getCommand()).setExecutor((sender, cmd, s, args) -> true);
     }
 
     public static List<DrainCommand> getCommands() {

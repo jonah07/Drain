@@ -1,5 +1,6 @@
 package net.ghastgames.drain.event.listeners;
 
+import net.ghastgames.drain.Drain;
 import net.ghastgames.drain.command.BukkitCommandRegistry;
 import net.ghastgames.drain.command.CommandCondition;
 import net.ghastgames.drain.command.CommandExecutionData;
@@ -9,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
@@ -932,7 +934,7 @@ public class BukkitListeners implements Listener {
     }
 
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event) {
         BukkitEventHandler.handleBukkitEvent(event.getClass());
         BukkitEventHandler.handleCancellableBukkitEvent(event.getClass(), event);
@@ -1327,8 +1329,15 @@ public class BukkitListeners implements Listener {
     }
 
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onRemoteServerCommandEvent(RemoteServerCommandEvent event) {
+        BukkitEventHandler.handleBukkitEvent(event.getClass());
+        BukkitEventHandler.handleCancellableBukkitEvent(event.getClass(), event);
+    }
+
+
+    @EventHandler
+    public void onServerCommandEvent(ServerCommandEvent event) {
         BukkitEventHandler.handleBukkitEvent(event.getClass());
         BukkitEventHandler.handleCancellableBukkitEvent(event.getClass(), event);
 
@@ -1345,36 +1354,35 @@ public class BukkitListeners implements Listener {
                 } else {
                     // Dynamic command
 
-                    boolean conditionResult = true;
-                    CommandExecutionData data = new CommandExecutionData(Bukkit.getConsoleSender(), event.getCommand().split(" "));
-                    for(CommandCondition condition : command.getConditions()) {
-                        if(!condition.condition(data)) {
-                            conditionResult = false;
+                    if(!command.isPlayerOnly()) {
+                        boolean conditionResult = true;
+                        CommandExecutionData data = new CommandExecutionData(Bukkit.getConsoleSender(), event.getCommand().split(" "));
+                        for (CommandCondition condition : command.getConditions()) {
+                            if (!condition.condition(data)) {
+                                conditionResult = false;
+                            }
                         }
-                    }
 
-                    if(!conditionResult) {
-                        if(command.getConditionReturnedFalseMessage() != null) {
-                            Bukkit.getConsoleSender().sendMessage(command.getConditionReturnedFalseMessage());
-                        }
-                    } else {
-                        if(command.getStaticResponse() != null) {
-                            Bukkit.getConsoleSender().sendMessage(command.getStaticResponse());
+                        if (!conditionResult) {
+                            if (command.getConditionReturnedFalseMessage() != null) {
+                                Bukkit.getConsoleSender().sendMessage(command.getConditionReturnedFalseMessage());
+                            }
                         } else {
-                            command.getDrainExecutor().execute(data);
+                            if (command.getStaticResponse() != null) {
+                                Bukkit.getConsoleSender().sendMessage(command.getStaticResponse());
+                            } else {
+                                command.getDrainExecutor().execute(data);
+                            }
                         }
+                        event.setCancelled(true);
+                    } else {
+                        event.getSender().sendMessage(Drain.COMMAND_PLAYER_ONLY);
+                        event.setCancelled(true);
+                        return;
                     }
-                    event.setCancelled(true);
                 }
             }
         }
-    }
-
-
-    @EventHandler
-    public void onServerCommandEvent(ServerCommandEvent event) {
-        BukkitEventHandler.handleBukkitEvent(event.getClass());
-        BukkitEventHandler.handleCancellableBukkitEvent(event.getClass(), event);
     }
 
 

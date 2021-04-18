@@ -4,3 +4,4 @@ main: net.ghastgames.drain.DrainPlugin
 name: Drain
 commands:
   drain:
+  draintest:

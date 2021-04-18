@@ -134,7 +134,7 @@ public class DynamicCommandBuilder {
     /**
      * Builds and registers the command.
      */
-    public void build() {
+    public DynamicCommandBuilder build() {
         DrainCommand command = new DrainCommand();
         command.setCommand(this.command);
         command.setStaticResponse(this.staticMessage);
@@ -145,6 +145,8 @@ public class DynamicCommandBuilder {
         command.setPlayerOnly(playerOnly);
         command.setDynamicCommand(true);
 
-        BukkitCommandRegistry.registerCommand(command);
+        BukkitCommandRegistry.registerCommand(command, this.plugin);
+
+        return this;
     }
 }
