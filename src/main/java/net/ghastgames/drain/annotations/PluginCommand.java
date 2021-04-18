@@ -24,6 +24,9 @@ public @interface PluginCommand {
 
     /**
      * Auto-/tabcomplete options
+     *
+     * TODO:
+     *  - add the functionality
      */
     String[] tabcomplete() default {};
 
