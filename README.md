@@ -16,11 +16,14 @@ public class HealCommand implements CommandExecutor {
             Player player = (Player) sender;
             if(player.hasPermission("command.heal")) {
                 player.setHealth(20);
+                return true;
             } else {
                 player.sendMessage("§cYou are not allowed to do this!");
+                return false;
             }
         } else {
             commandSender.sendMessage("§cThis command is player-only!");
+            return false;
         }
     }
 }
@@ -36,5 +39,3 @@ new DynamicCommandBuilder("heal", this)
         .setExecutor(data -> ((Player) data.getSender()).setHealth(20))
         .build();
 ```
-
-
