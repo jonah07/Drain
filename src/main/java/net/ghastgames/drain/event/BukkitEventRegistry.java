@@ -54,11 +54,11 @@ public class BukkitEventRegistry {
                             eventErrorMessageList.put(eventClass.getSimpleName(), method.getAnnotation(Cancel.class).errorMessage());
                         }
                     }
-                } else {
-                    BukkitEventRegistry.registerListener(givenListener, plugin);
                 }
             }
         }
+
+        Bukkit.getPluginManager().registerEvents(givenListener, plugin);
     }
 
     public static List<String> getCancelledEventList() {
