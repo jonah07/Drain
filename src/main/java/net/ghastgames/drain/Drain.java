@@ -20,6 +20,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Drain {
     private static Drain instance;
 
+    public static String COMMAND_PLAYER_ONLY = "§cThis command is player-only!";
+
     private Drain() {}
 
     /**

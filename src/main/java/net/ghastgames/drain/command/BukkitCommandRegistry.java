@@ -39,6 +39,13 @@ public class BukkitCommandRegistry {
         }
     }
 
+    /**
+     * <strong>It's not recommended to use this method! Use the DynamicCommandBuilder instead.</strong>
+     */
+    public static void registerCommand(DrainCommand drainCommand) {
+        commands.add(drainCommand);
+    }
+
     public static List<DrainCommand> getCommands() {
         return commands;
     }

@@ -1,8 +1,11 @@
 package net.ghastgames.drain.event.listeners;
 
 import net.ghastgames.drain.command.BukkitCommandRegistry;
+import net.ghastgames.drain.command.CommandCondition;
+import net.ghastgames.drain.command.CommandExecutionData;
 import net.ghastgames.drain.command.DrainCommand;
 import net.ghastgames.drain.event.BukkitEventHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
@@ -937,19 +940,52 @@ public class BukkitListeners implements Listener {
 
         for(DrainCommand command : BukkitCommandRegistry.getCommands()) {
             if(command.getCommand().equalsIgnoreCase((event.getMessage().contains(" ") ? event.getMessage().substring(1, event.getMessage().indexOf(" ")) : event.getMessage().replace("/", "")))) {
-                if(!command.getPermission().isEmpty()) {
-                    if (!event.getPlayer().hasPermission(command.getPermission())) {
-                        event.getPlayer().sendMessage(command.getPermissionErrorMessage());
+                if(!command.isDynamicCommand()) {
+                    if (!command.getPermission().isEmpty()) {
+                        if (!event.getPlayer().hasPermission(command.getPermission())) {
+                            event.getPlayer().sendMessage(command.getPermissionErrorMessage());
+                            event.setCancelled(true);
+                        }
+                    }
+                    if (!command.getStaticResponse().isEmpty()) {
+                        String[] messages = command.getStaticResponse()
+                                .replace("%player%", event.getPlayer().getName())
+                                .replace("%player_displayname%", event.getPlayer().getDisplayName())
+                                .split("\n");
+                        for (String message : messages) {
+                            event.getPlayer().sendMessage(message);
+                        }
                         event.setCancelled(true);
                     }
-                }
-                if(!command.getStaticResponse().isEmpty()) {
-                    String[] messages = command.getStaticResponse()
-                            .replace("%player%", event.getPlayer().getName())
-                            .replace("%player_displayname%", event.getPlayer().getDisplayName())
-                            .split("\n");
-                    for(String message : messages) {
-                        event.getPlayer().sendMessage(message);
+                } else {
+                    // Dynamic command
+
+                    if(command.getPermission() != null) {
+                        if(!event.getPlayer().hasPermission(command.getPermission())) {
+                            event.getPlayer().sendMessage((command.getPermissionErrorMessage() != null ? command.getPermissionErrorMessage() : "§cYou are not allowed to do this!"));
+                            event.setCancelled(true);
+                            return;
+                        }
+                    }
+
+                    boolean conditionResult = true;
+                    CommandExecutionData data = new CommandExecutionData(event.getPlayer(), event.getMessage().replace("/", "").split(" "));
+                    for(CommandCondition condition : command.getConditions()) {
+                        if(!condition.condition(data)) {
+                            conditionResult = false;
+                        }
+                    }
+
+                    if(!conditionResult) {
+                        if(command.getConditionReturnedFalseMessage() != null) {
+                            event.getPlayer().sendMessage(command.getConditionReturnedFalseMessage());
+                        }
+                    } else {
+                        if(command.getStaticResponse() != null) {
+                            event.getPlayer().sendMessage(command.getStaticResponse());
+                        } else {
+                            command.getDrainExecutor().execute(data);
+                        }
                     }
                     event.setCancelled(true);
                 }
@@ -1295,6 +1331,43 @@ public class BukkitListeners implements Listener {
     public void onRemoteServerCommandEvent(RemoteServerCommandEvent event) {
         BukkitEventHandler.handleBukkitEvent(event.getClass());
         BukkitEventHandler.handleCancellableBukkitEvent(event.getClass(), event);
+
+        for(DrainCommand command : BukkitCommandRegistry.getCommands()) {
+            if(command.getCommand().equalsIgnoreCase((event.getCommand().contains(" ") ? event.getCommand().substring(1, event.getCommand().indexOf(" ")) : event.getCommand()))) {
+                if(!command.isDynamicCommand()) {
+                    if (!command.getStaticResponse().isEmpty()) {
+                        String[] messages = command.getStaticResponse().split("\n");
+                        for (String message : messages) {
+                            Bukkit.getConsoleSender().sendMessage(message);
+                        }
+                        event.setCancelled(true);
+                    }
+                } else {
+                    // Dynamic command
+
+                    boolean conditionResult = true;
+                    CommandExecutionData data = new CommandExecutionData(Bukkit.getConsoleSender(), event.getCommand().split(" "));
+                    for(CommandCondition condition : command.getConditions()) {
+                        if(!condition.condition(data)) {
+                            conditionResult = false;
+                        }
+                    }
+
+                    if(!conditionResult) {
+                        if(command.getConditionReturnedFalseMessage() != null) {
+                            Bukkit.getConsoleSender().sendMessage(command.getConditionReturnedFalseMessage());
+                        }
+                    } else {
+                        if(command.getStaticResponse() != null) {
+                            Bukkit.getConsoleSender().sendMessage(command.getStaticResponse());
+                        } else {
+                            command.getDrainExecutor().execute(data);
+                        }
+                    }
+                    event.setCancelled(true);
+                }
+            }
+        }
     }
 
 
