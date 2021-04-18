@@ -2,7 +2,7 @@
 
 ## What is Drain?
 Drain is a library for **Spigot and Bukkit** plugins that helps you to develop your plugins faster and easier.
-It includes many functionalities to make your development life easier.
+It includes many functionalities to make your development life easier. Head over to the [wiki](https://github.com/GhastGames/Drain/wiki) section for a tutorial!
 
 ## Example: A /heal command
 
