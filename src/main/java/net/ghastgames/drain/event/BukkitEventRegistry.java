@@ -39,14 +39,10 @@ public class BukkitEventRegistry {
     }
 
     public static void registerListener(Listener givenListener, JavaPlugin plugin) {
-        Bukkit.getLogger().info("1");
         for(Method method : givenListener.getClass().getDeclaredMethods()) {
-            Bukkit.getLogger().info("2");
             if(method.isAnnotationPresent(EventHandler.class) && method.getParameterCount() == 1) {
-                Bukkit.getLogger().info("3");
                 if(method.isAnnotationPresent(Cancel.class)) {
                     Class<?> eventClass = method.getParameterTypes()[0];
-                    Bukkit.getLogger().info("4");
                     if(bukkitEventList.contains(eventClass.getName())) {
                         cancelledEventList.add(eventClass.getSimpleName());
 
@@ -57,12 +53,9 @@ public class BukkitEventRegistry {
                         if(!method.getAnnotation(Cancel.class).errorMessage().equals("")) {
                             eventErrorMessageList.put(eventClass.getSimpleName(), method.getAnnotation(Cancel.class).errorMessage());
                         }
-
-                        Bukkit.getLogger().info("5 - " + eventClass.getName());
                     }
                 } else {
                     BukkitEventRegistry.registerListener(givenListener, plugin);
-                    Bukkit.getLogger().info("6");
                 }
             }
         }
