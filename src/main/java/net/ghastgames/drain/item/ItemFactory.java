@@ -1,7 +1,10 @@
 package net.ghastgames.drain.item;
 
+import net.minecraft.server.v1_8_R3.NBTBase;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -101,6 +104,15 @@ public class ItemFactory {
                 this.itemMeta.removeItemFlags(ItemFlag.HIDE_UNBREAKABLE);
             }
         }
+        return this;
+    }
+
+    public ItemFactory addNBTTag(String name, NBTBase value) {
+        net.minecraft.server.v1_8_R3.ItemStack itemStack = CraftItemStack.asNMSCopy(this.itemStack);
+        NBTTagCompound nbtTagCompound = itemStack.getTag();
+        nbtTagCompound.set(name, value);
+        itemStack.setTag(nbtTagCompound);
+        this.itemStack = CraftItemStack.asBukkitCopy(itemStack);
         return this;
     }
 
