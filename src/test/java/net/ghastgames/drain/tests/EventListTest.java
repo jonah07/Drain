@@ -7,6 +7,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityEvent;
 import org.bukkit.event.player.PlayerEvent;
 
+// to clarify, this is a code generator to generate the bukkit event listener class
 public class EventListTest {
 
     public static void main(String[] args) {
