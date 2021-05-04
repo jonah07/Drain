@@ -17,10 +17,20 @@ public class ConfigManager {
         this.config = plugin.getConfig();
     }
 
+    /**
+     * Returns a saved value
+     * @param path The path to the value
+     */
     public Object getConfigValue(String path) {
         return config.get(path);
     }
 
+    /**
+     * Saves a location in the plugin's configuration file
+     *
+     * @param path The path to the location
+     * @param location The location
+     */
     public void saveLocation(String path, Location location) {
         // I know that Location implements ConfigurationSerializable, but when you load a
         // location before the concerning world is loaded, you'll get an exception
@@ -31,5 +41,12 @@ public class ConfigManager {
         config.set(path + ".yaw", location.getYaw());
         config.set(path + ".pitch", location.getPitch());
         config.set(path + ".world", location.getWorld().getUID().toString()); // We're saving the UID instead of the name
+    }
+
+    /**
+     * Saves a value at the given path
+     */
+    public void setConfigValue(String path, Object value) {
+        config.set(path, value);
     }
 }
