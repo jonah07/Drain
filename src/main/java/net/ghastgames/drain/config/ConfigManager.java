@@ -9,11 +9,9 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 public class ConfigManager {
-    private JavaPlugin plugin;
     private FileConfiguration config;
 
     public ConfigManager(JavaPlugin plugin) {
-        this.plugin = plugin;
         this.config = plugin.getConfig();
     }
 
