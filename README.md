@@ -42,4 +42,3 @@ new DynamicCommandBuilder("heal", this)
         .build();
 ```
 
-Also available on Spigot
