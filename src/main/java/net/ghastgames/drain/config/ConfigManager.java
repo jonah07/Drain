@@ -5,6 +5,9 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.Serializable;
+import java.util.HashMap;
+
 public class ConfigManager {
     private JavaPlugin plugin;
     private FileConfiguration config;
