@@ -116,6 +116,11 @@ public class ItemFactory {
         return this;
     }
 
+    public ItemFactory addFlag(ItemFlag flag) {
+        this.itemMeta.addItemFlags(flag);
+        return this;
+    }
+
     public ItemStack build() {
         this.itemStack.setItemMeta(itemMeta);
         return this.itemStack;
