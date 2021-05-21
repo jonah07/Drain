@@ -1,7 +1,7 @@
 ![Drain - The Minecraft Plugin Library](https://i.imgur.com/x8Ks6aN.png)
 
 ## What is Drain?
-Drain is a library for **Spigot and Bukkit** plugins that helps you to develop your plugins faster and easier.
+Drain is a library for **Spigot and Bukkit** plugins that helps you to develop your plugins faster and easier. I am trying to update it every month at least once.
 It includes many functionalities to make your development life easier. Head over to the [wiki](https://github.com/GhastGames/Drain/wiki) section for a tutorial!
 
 SpigotMC: https://www.spigotmc.org/resources/drain.91445
