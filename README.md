@@ -41,4 +41,3 @@ new DynamicCommandBuilder("heal", this)
         .setExecutor(data -> ((Player) data.getSender()).setHealth(20))
         .build();
 ```
-
