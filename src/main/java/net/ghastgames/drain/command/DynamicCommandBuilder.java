@@ -145,7 +145,7 @@ public class DynamicCommandBuilder {
      * @param option The tabcomplete option
      */
     public DynamicCommandBuilder addTabCompleteOption(String option) {
-
+        this.tabCompleteOptions.add(new TabCompleteOption("", option));
     }
 
     /**
