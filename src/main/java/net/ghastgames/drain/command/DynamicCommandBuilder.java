@@ -132,6 +132,20 @@ public class DynamicCommandBuilder {
     }
 
     /**
+     * Adds an option for tab complete to complete
+     *
+     * Example:
+     * /mycommand test
+     *
+     * The option would be "test"
+     *
+     * @param option The tabcomplete option
+     */
+    public DynamicCommandBuilder addTabCompleteOption(String option) {
+
+    }
+
+    /**
      * Builds and registers the command.
      */
     public DynamicCommandBuilder build() {
