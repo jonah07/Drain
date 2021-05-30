@@ -2,6 +2,7 @@ package net.ghastgames.drain.command;
 
 import net.ghastgames.drain.exception.NonStaticExecutorAlreadySetException;
 import net.ghastgames.drain.exception.StaticExecutorAlreadySetException;
+import net.ghastgames.drain.tabcomplete.TabCompleteOption;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,12 +19,14 @@ public class DynamicCommandBuilder {
     private String conditionReturnedFalseMessage;
     private CommandExecutor executor;
     private List<CommandCondition> executionConditions;
+    private List<TabCompleteOption> tabCompleteOptions;
     private boolean playerOnly;
 
     public DynamicCommandBuilder(String command, JavaPlugin plugin) {
         this.command = command;
         this.plugin = plugin;
         this.executionConditions = new ArrayList<>();
+        this.tabCompleteOptions = new ArrayList<>();
     }
 
     /**
