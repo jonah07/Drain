@@ -150,6 +150,15 @@ public class DynamicCommandBuilder {
     }
 
     /**
+     * Adds an option for tab complete to complete, but only if
+     * the given string has already been typed
+     */
+    public DynamicCommandBuilder addTabCompleteOption(String condition, String option) {
+        // TODO
+        return this;
+    }
+
+    /**
      * Builds and registers the command.
      */
     public DynamicCommandBuilder build() {
