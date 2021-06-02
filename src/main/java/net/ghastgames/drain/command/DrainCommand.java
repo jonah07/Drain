@@ -1,5 +1,6 @@
 package net.ghastgames.drain.command;
 
+import net.ghastgames.drain.tabcomplete.TabCompleteOption;
 import org.bukkit.command.CommandExecutor;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class DrainCommand {
     private String conditionReturnedFalseMessage;
     private net.ghastgames.drain.command.CommandExecutor drainExecutor;
     private List<CommandCondition> conditions = new ArrayList<>();
+    private List<TabCompleteOption> tabCompleteOptions = new ArrayList<>();
     private boolean playerOnly = false;
     private boolean dynamicCommand = false;
 
@@ -115,5 +117,11 @@ public class DrainCommand {
         this.playerOnly = playerOnly;
     }
 
+    public List<TabCompleteOption> getTabCompleteOptions() {
+        return tabCompleteOptions;
+    }
 
+    public void setTabCompleteOptions(List<TabCompleteOption> tabCompleteOptions) {
+        this.tabCompleteOptions = tabCompleteOptions;
+    }
 }
