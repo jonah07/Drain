@@ -154,7 +154,7 @@ public class DynamicCommandBuilder {
      * the given string has already been typed
      */
     public DynamicCommandBuilder addTabCompleteOption(String condition, String option) {
-        // TODO
+        this.tabCompleteOptions.add(new TabCompleteOption(condition, option));
         return this;
     }
 
