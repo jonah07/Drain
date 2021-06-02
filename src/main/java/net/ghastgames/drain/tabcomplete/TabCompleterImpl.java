@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TabCompleterImpl implements TabCompleter {
@@ -34,6 +35,6 @@ public class TabCompleterImpl implements TabCompleter {
             }
         });
 
-        return Arrays.asList();
+        return TabCompleteUtils.convertTabCompleteOptionsToString(optionStream.collect(Collectors.toList()));
     }
 }
