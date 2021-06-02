@@ -171,7 +171,7 @@ public class DynamicCommandBuilder {
         command.setDrainExecutor(this.executor);
         command.setPlayerOnly(playerOnly);
         command.setDynamicCommand(true);
-        command.setTabcomplete();
+        command.setTabCompleteOptions(tabCompleteOptions);
 
         BukkitCommandRegistry.registerCommand(command, this.plugin);
 
