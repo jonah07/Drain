@@ -61,6 +61,7 @@ public class DrainCommand {
         return tabcomplete;
     }
 
+    @Deprecated
     public void setTabcomplete(List<String> tabcomplete) {
         this.tabcomplete = tabcomplete;
     }
