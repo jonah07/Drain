@@ -31,7 +31,7 @@ public class HealCommand implements CommandExecutor {
 }
 ```
 
-With Drain:
+__With Drain:__
 
 ```java
 new DynamicCommandBuilder("heal", this)
