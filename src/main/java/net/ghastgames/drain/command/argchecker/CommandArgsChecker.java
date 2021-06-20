@@ -12,6 +12,13 @@ public class CommandArgsChecker {
     }
 
     public boolean checkArgs(String[] givenArgs, String template, String... expressions) {
+        String[] templateParts = template.split(" ");
+        String command = templateParts[0];
+        String cleanCommand = command.replace("/", ""); // Command without slash
+
+        if(templateParts.length == 1) { // no arguments
+            
+        }
         return true;
     }
 }
