@@ -19,7 +19,7 @@ public class CommandArgsChecker {
         String command = templateParts[0];
         String cleanCommand = command.replace("/", ""); // Command without slash
 
-        if(templateArgs.length != givenArgs.length) {
+        if(templateArgs.length != givenArgs.length) { // TODO: Ignore optional args
             return false;
         }
         return true;
