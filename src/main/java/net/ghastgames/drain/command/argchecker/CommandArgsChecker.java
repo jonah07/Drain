@@ -10,4 +10,8 @@ public class CommandArgsChecker {
         if(instance == null) instance = new CommandArgsChecker();
         return instance;
     }
+
+    public boolean checkArgs(String[] givenArgs, String template, String... expressions) {
+        return true;
+    }
 }
